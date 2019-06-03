@@ -7,7 +7,7 @@ import { User } from '../user';
 })
 export class RegistrationService {
 
-  registrationUrl = "http://localhost:8080/user/register";
+  registrationUrl = "http://localhost:3000/users/register";
 
   constructor(private http : HttpClient) { }
 

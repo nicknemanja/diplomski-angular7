@@ -39,10 +39,10 @@ export class LoginComponent implements OnInit {
 
   handleLoginData(userData) {
 
-    if(userData.status == "SUCCESS") {
+    if(userData.success) {
       alert("User je logovan.");
-      sessionStorage.setItem("isUserLoggedIn", "1");
-      this.router.navigate(['/example']); //preimenovati
+      sessionStorage.setItem("token", userData.token);
+      this.router.navigate(['/cryptocurrencies']);
     } else {
       alert(userData.message);
     }

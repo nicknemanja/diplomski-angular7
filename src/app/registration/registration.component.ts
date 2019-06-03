@@ -52,12 +52,11 @@ export class RegistrationComponent implements OnInit {
 
   handleData(responseData) {
 
-    if(responseData.status == "SUCCESS") {
+    if(responseData.success) {
       alert("Registration success.");
-
       this.router.navigate(['/login']);
     } else {
-        alert(responseData.message);
+        alert(responseData.msg);
     }
 
   }
