@@ -2,6 +2,11 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { JwtModule } from '@auth0/angular-jwt';
+
+export function tokenGetter() {
+  return sessionStorage.getItem('token');
+}
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,7 +28,14 @@ import { CryptocurrenciesComponent } from './cryptocurrencies/cryptocurrencies.c
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        whitelistedDomains: ['localhost:3000'],
+        blacklistedRoutes: ['']
+      }
+    })
   ],
   providers: [RegistrationService, LoginService],
   bootstrap: [AppComponent]

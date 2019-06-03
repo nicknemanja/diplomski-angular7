@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
       sessionStorage.setItem("token", userData.token);
       this.router.navigate(['/cryptocurrencies']);
     } else {
-      alert(userData.message);
+      alert(userData.msg);
     }
 
   }

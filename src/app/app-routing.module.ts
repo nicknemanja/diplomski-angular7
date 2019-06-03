@@ -6,12 +6,11 @@ import { CryptocurrenciesComponent } from './cryptocurrencies/cryptocurrencies.c
 
 import { AuthguardService } from './services/authguard.service';
 
-
 const routes: Routes = [
 	{path: '', component: LoginComponent},
 	{path: 'login', component: LoginComponent},
 	{path: 'registration', component: RegistrationComponent},
-	{path: 'cryptocurrencies', component: CryptocurrenciesComponent}
+	{path: 'cryptocurrencies', component: CryptocurrenciesComponent, canActivate: [AuthguardService] }
 ];
 
 @NgModule({

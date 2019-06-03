@@ -1,66 +1,61 @@
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
-
-    <div class="container">    
-        <div id="signupbox" style=" margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <div class="panel-title">Registration</div>
-                            <div style="float:right; font-size: 85%; position: relative; top:-10px"><a id="signinlink" routerLink="/login">Sign In</a></div>
-                        </div>  
-                        <div class="panel-body" >
-                            <form #userForm="ngForm" (ngSubmit)="onSubmit()" id="signupform" class="form-horizontal" role="form" >
+<div class="container">    
+    <div id="signupbox" style=" margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <div class="panel-title">Registration</div>
+                        <div style="float:right; font-size: 85%; position: relative; top:-10px"><a id="signinlink" routerLink="/login">Sign In</a></div>
+                    </div>  
+                    <div class="panel-body" >
+                        <form #userForm="ngForm" (ngSubmit)="onSubmit()" id="signupform" class="form-horizontal" role="form" >
+                            
+                            <div id="signupalert" style="display:none" class="alert alert-danger">
+                                <p>Error:</p>
+                                <span></span>
+                            </div>
                                 
-                                <div id="signupalert" style="display:none" class="alert alert-danger">
-                                    <p>Error:</p>
-                                    <span></span>
-                                </div>
-                                    
-                                
-                                  
-            <div class="form-group">
-                <label for="username" class="col-md-3 control-label">Username</label>
-                <div class="col-md-9">
-                    <input  id="registration-username" maxlength="20" type="text" class="form-control" name="username" placeholder="Username" [(ngModel)]="user.username" required>
-                </div>
+                            
+                              
+        <div class="form-group">
+            <label for="username" class="col-md-3 control-label">Username</label>
+            <div class="col-md-9">
+                <input  id="registration-username" maxlength="20" type="text" class="form-control" name="username" placeholder="Username" [(ngModel)]="user.username" required>
             </div>
-                                    
-                                <div class="form-group">
-                                    <label for="firstname" class="col-md-3 control-label">First Name</label>
-                                    <div class="col-md-9">
-                                        <input id="registration-firstname" maxlength="20" type="text" class="form-control" name="firstname" placeholder="First Name" [(ngModel)]="user.firstname" required>
-                                    </div>
+        </div>
+                                
+                            <div class="form-group">
+                                <label for="firstname" class="col-md-3 control-label">First Name</label>
+                                <div class="col-md-9">
+                                    <input id="registration-firstname" maxlength="20" type="text" class="form-control" name="firstname" placeholder="First Name" [(ngModel)]="user.firstname" required>
                                 </div>
-                                <div class="form-group">
-                                    <label for="lastname" class="col-md-3 control-label">Last Name</label>
-                                    <div class="col-md-9">
-                                        <input id="registration-lastname" maxlength="20" type="text" class="form-control" name="lastname" placeholder="Last Name" [(ngModel)]="user.lastname">
-                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastname" class="col-md-3 control-label">Last Name</label>
+                                <div class="col-md-9">
+                                    <input id="registration-lastname" maxlength="20" type="text" class="form-control" name="lastname" placeholder="Last Name" [(ngModel)]="user.lastname">
                                 </div>
-                                <div class="form-group">
-                                    <label for="password" class="col-md-3 control-label">Password</label>
-                                    <div class="col-md-9">
-                                        <input id="registration-password" maxlength="20" type="password" class="form-control" name="password" placeholder="Password" [(ngModel)]="user.password">
-                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="col-md-3 control-label">Password</label>
+                                <div class="col-md-9">
+                                    <input id="registration-password" maxlength="20" type="password" class="form-control" name="password" placeholder="Password" [(ngModel)]="user.password">
                                 </div>
-                                    
-                                <div class="form-group">
-                                    <label for="email" class="col-md-3 control-label">Email</label>
-                                    <div class="col-md-9">
-                                        <input id="registration-email" maxlength="20" type="text" class="form-control" name="email" placeholder="Email" [(ngModel)]="user.email">
-                                    </div>
+                            </div>
+                                
+                            <div class="form-group">
+                                <label for="email" class="col-md-3 control-label">Email</label>
+                                <div class="col-md-9">
+                                    <input id="registration-email" maxlength="20" type="text" class="form-control" name="email" placeholder="Email" [(ngModel)]="user.email">
                                 </div>
+                            </div>
 
-                                <div class="form-group">
-                                    <!-- Button -->                                        
-                                    <div class="col-md-offset-3 col-md-6">
-                                        <button id="btn-signup" type="submit" class="btn btn-info"><i class="icon-hand-right"></i> Register</button> 
-                                    </div>
+                            <div class="form-group">
+                                <!-- Button -->                                        
+                                <div class="col-md-offset-3 col-md-6">
+                                    <button id="btn-signup" type="submit" class="btn btn-info"><i class="icon-hand-right"></i> Register</button> 
                                 </div>
-                        </form>
-                         </div>
-                    </div>
-     </div> 
-    </div>
+                            </div>
+                    </form>
+                     </div>
+                </div>
+ </div> 
+</div>
