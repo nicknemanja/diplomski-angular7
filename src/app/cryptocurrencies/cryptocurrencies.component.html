@@ -4,14 +4,14 @@
       <label for="exampleFormControlSelect2">From criptocurrencies:</label>
       <div class="form-group">
         <select multiple class="form-control" id="selectBoxFrom">
-          <option *ngFor="let criptocurrency of fromValutes">{{criptocurrency}}</option>
+          <option *ngFor="let criptocurrency of FROM_VALUTES">{{criptocurrency}}</option>
         </select>
       </div>
 
       <label for="exampleFormControlSelect2">To:</label>
       <div class="form-group">
         <select multiple class="form-control" id="selectBoxTo">
-          <option *ngFor="let criptocurrency of toValutes" value={{criptocurrency}}>{{criptocurrency}}</option>
+          <option *ngFor="let criptocurrency of TO_VALUTES" value={{criptocurrency}}>{{criptocurrency}}</option>
         </select>
       </div>
     </div>
