@@ -19,4 +19,21 @@
     <button type="submit" class="btn btn-success">Convert</button>
 
   </form>
+
+
+  <table >
+    <thead>
+      <th>VALUTE</th>
+      <th *ngFor="let valuteTo of valutesTo">{{valuteTo}}</th>
+    </thead>
+      <tbody>
+        <tr *ngFor="let valuteFrom of valutesFrom">
+          <td>{{valuteFrom}}</td>
+          <td *ngFor="let vrijednost of result[valuteFrom]">
+              {{vrijednost  }}
+          </td>
+        </tr>
+      </tbody>
+  </table>
+
 </div>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CryptocurrencyService } from '../services/cryptocurrency.service';
 
 @Component({
   selector: 'app-cryptocurrencies',
@@ -13,28 +14,60 @@ export class CryptocurrenciesComponent implements OnInit {
   FROM_VALUTES = ["BTC", "XRP", "ETH", "LTC"];
   TO_VALUTES = ["USD", "EUR", "BTC",  "XRP", "ETH", "LTC"];
 
-  constructor() { }
+  valutesFrom = [];
+  valutesTo = [];
+  result = {};
 
-  ngOnInit() {
-  }
+  constructor(private cryptocurrencyService: CryptocurrencyService) { }
+
+  ngOnInit() { }
 
   convertCriptocurrencies() {
   	let from = this.getSelectedOptions("selectBoxFrom");
   	let to = this.getSelectedOptions("selectBoxTo");
   	let apiRequest = this.getApiConvertValutesRequest(from, to);
-	
-  	
-	
+
+  	this.cryptocurrencyService.getCryptocurrencyDetails(apiRequest).subscribe(data => this.handleResponse(data));
   }
 
   getSelectedOptions(selectBoxId) {
-  	let selectBox = document.getElementById(selectBoxId);
-    let selectedOptions = [];
-    for (let i = 0; i < selectBox.length; i++) {
+  	var selectBox = <any>document.getElementById(""+selectBoxId);
+    var selectedOptions = [];
+    for (var i = 0; i < selectBox.options.length; i++) {
         if (selectBox.options[i].selected) selectedOptions.push(selectBox.options[i].value);
     }
-
     return selectedOptions;
+  }
+
+  handleResponse(data) {
+
+  this.valutesFrom = Object.keys(data);
+
+  console.log("ValutesFrom: " + this.valutesFrom);
+
+  var index = 0;
+
+  for(let i=0; i < this.valutesFrom.length; i++ ) {
+  	console.log("value:" + this.valutesFrom[i]);
+  	console.log("values:" + Object.values(data[this.valutesFrom[i]]));
+  	this.result[this.valutesFrom[i]] = Object.values(data[this.valutesFrom[i]]);
+
+  }
+
+  this.valutesFrom.forEach(function(value){
+  	//console.log("value:" + value);
+  	//console.log("values:" + Object.values(data[value]));
+  	//this.result["XRP"] = "dasdasdas";
+  	//this.result["XRP"] = Object.values(data[value]);
+  });
+
+  console.log("Result:" + JSON.stringify(this.result));
+
+  var firstValute = this.valutesFrom[0];
+  this.valutesTo = Object.keys(data[firstValute]);
+
+  console.log("Valute from: " + JSON.stringify(this.valutesFrom));
+  console.log("Valute to: " + JSON.stringify(this.valutesTo));
   }
 
   getApiConvertValutesRequest(from, to) {
@@ -42,7 +75,7 @@ export class CryptocurrenciesComponent implements OnInit {
   	let paramToValutes = "tsyms=" + to.join();
   	let paramApiKey = "api_key=" + this.API_KEY;
 
-  	return this.CONVERT_CRYPTOCURRENCIES_API + "?" + paramFromValutes + "&" + paramToValutes + paramApiKey;
+  	return this.CONVERT_CRYPTOCURRENCIES_API + "?" + paramFromValutes + "&" + paramToValutes + "&" + paramApiKey;
   }
 
 }

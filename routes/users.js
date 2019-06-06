@@ -58,10 +58,12 @@ router.post('/authenticate', (req, res, next) =>{
             email: user.email
           }
         });
-      }else{
-        return res.json({success:false, msg: "Wrong username and/or password!"});
+      } else{
+          res.json({success:false, msg: "Wrong username and/or password!"});
       }
+      return res;
     });
+
   });
 
 });
