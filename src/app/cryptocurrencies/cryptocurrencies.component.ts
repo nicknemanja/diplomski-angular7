@@ -18,6 +18,8 @@ export class CryptocurrenciesComponent implements OnInit {
   valutesTo = [];
   result = {};
 
+  hideData = true;
+
   constructor(private cryptocurrencyService: CryptocurrencyService) { }
 
   ngOnInit() { }
@@ -25,6 +27,14 @@ export class CryptocurrenciesComponent implements OnInit {
   convertCriptocurrencies() {
   	let from = this.getSelectedOptions("selectBoxFrom");
   	let to = this.getSelectedOptions("selectBoxTo");
+
+    /*
+    if(from == "" || to == "") {
+      alert("You have to select both options.");
+      return;
+    }
+    */
+
   	let apiRequest = this.getApiConvertValutesRequest(from, to);
 
   	this.cryptocurrencyService.getCryptocurrencyDetails(apiRequest).subscribe(data => this.handleResponse(data));
@@ -41,33 +51,18 @@ export class CryptocurrenciesComponent implements OnInit {
 
   handleResponse(data) {
 
-  this.valutesFrom = Object.keys(data);
+    this.valutesFrom = Object.keys(data);
+    var index = 0;
+    for(let i=0; i < this.valutesFrom.length; i++ ) {
+      let valueFrom = this.valutesFrom[i];
+      this.result[valueFrom] = Object.values(data[valueFrom]);
+    }
 
-  console.log("ValutesFrom: " + this.valutesFrom);
+    var firstValute = this.valutesFrom[0];
+    this.valutesTo = Object.keys(data[firstValute]);
 
-  var index = 0;
+    this.hideData = false;
 
-  for(let i=0; i < this.valutesFrom.length; i++ ) {
-  	console.log("value:" + this.valutesFrom[i]);
-  	console.log("values:" + Object.values(data[this.valutesFrom[i]]));
-  	this.result[this.valutesFrom[i]] = Object.values(data[this.valutesFrom[i]]);
-
-  }
-
-  this.valutesFrom.forEach(function(value){
-  	//console.log("value:" + value);
-  	//console.log("values:" + Object.values(data[value]));
-  	//this.result["XRP"] = "dasdasdas";
-  	//this.result["XRP"] = Object.values(data[value]);
-  });
-
-  console.log("Result:" + JSON.stringify(this.result));
-
-  var firstValute = this.valutesFrom[0];
-  this.valutesTo = Object.keys(data[firstValute]);
-
-  console.log("Valute from: " + JSON.stringify(this.valutesFrom));
-  console.log("Valute to: " + JSON.stringify(this.valutesTo));
   }
 
   getApiConvertValutesRequest(from, to) {

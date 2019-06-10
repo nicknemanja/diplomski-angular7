@@ -21,7 +21,7 @@
   </form>
 
 
-  <table >
+  <table [hidden]="hideData">
     <thead>
       <th>VALUTE</th>
       <th *ngFor="let valuteTo of valutesTo">{{valuteTo}}</th>

@@ -40,7 +40,6 @@ export class LoginComponent implements OnInit {
   handleLoginData(userData) {
 
     if(userData.success) {
-      alert("User je logovan.");
       sessionStorage.setItem("token", userData.token);
       this.router.navigate(['/cryptocurrencies']);
     } else {
