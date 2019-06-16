@@ -33,17 +33,18 @@ export class LoginComponent implements OnInit {
     }
 
     this.loginService.loginUser(this.user)
-    .subscribe(userData => this.handleLoginData(userData));
+        .subscribe(userData => this.handleLoginData(userData));
     
   }
 
   handleLoginData(userData) {
-
     if(userData.success) {
+      localStorage.setItem("username", userData.user.username);
       sessionStorage.setItem("token", userData.token);
       this.router.navigate(['/cryptocurrencies']);
     } else {
       alert(userData.msg);
+      return;
     }
 
   }

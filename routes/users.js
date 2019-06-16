@@ -1,8 +1,10 @@
+
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 const User = require('../models/user');
+const UserAction = require('../models/useraction');
 
 // Register
 router.post('/register', (req, res) => {
@@ -26,7 +28,8 @@ router.post('/register', (req, res) => {
 });
 
 // Authenticate
-router.post('/authenticate', (req, res, next) =>{
+router.post('/authenticate', (req, res, next) => {
+
   const username = req.body.username;
   const password = req.body.password;
 
@@ -67,6 +70,24 @@ router.post('/authenticate', (req, res, next) =>{
 
 });
 
+
+router.post("/log-user-action", (req, res, next) => {
+
+  let userActionData = new UserAction({
+    username: req.body.username,
+    action: req.body.action,
+    data: req.body.data
+  });
+
+  UserAction.logUserAction(userActionData, (err, user) => {
+    if(err){
+      console.log("LOG_USER_ACTION ERROR: " + JSON.stringify(err));
+      res.json({success:false,"msg": "Failed to log user action."});
+    }else{
+      res.json({success:true, "msg": "User action logged."});
+    }});
+
+});
 
 router.get('*', (req, res) => {
   res.redirect('/');

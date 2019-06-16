@@ -30,7 +30,6 @@ export class AuthguardService implements CanActivate{
       return false;
     }
 
-    //TODO
     const decodedToken = this.jwtHelper.decodeToken(token);
     const expirationDate = this.jwtHelper.getTokenExpirationDate(token);
     const isExpired = this.jwtHelper.isTokenExpired(token);
@@ -39,8 +38,13 @@ export class AuthguardService implements CanActivate{
   }
 
   logout(){
-    sessionStorage.removeItem("token");
+    this.clearStorage();
     this.router.navigate(['/login']);
+  }
+
+  clearStorage() {
+    sessionStorage.removeItem("token");
+    localStorage.removeItem("username");
   }
 
 }

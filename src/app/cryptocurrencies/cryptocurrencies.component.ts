@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CryptocurrencyService } from '../services/cryptocurrency.service';
+import { LoggerService } from '../services/logger.service';
 
 @Component({
   selector: 'app-cryptocurrencies',
@@ -20,22 +21,21 @@ export class CryptocurrenciesComponent implements OnInit {
 
   hideData = true;
 
-  constructor(private cryptocurrencyService: CryptocurrencyService) { }
+  lastUserAction;
+  userActionResponse = {};
+
+  constructor(private cryptocurrencyService: CryptocurrencyService,
+              private loggerService: LoggerService) { }
 
   ngOnInit() { }
 
   convertCriptocurrencies() {
   	let from = this.getSelectedOptions("selectBoxFrom");
   	let to = this.getSelectedOptions("selectBoxTo");
-
-    /*
-    if(from == "" || to == "") {
-      alert("You have to select both options.");
-      return;
-    }
-    */
-
-  	let apiRequest = this.getApiConvertValutesRequest(from, to);
+    let apiRequest = this.getApiConvertValutesRequest(from, to);
+    
+    //for logging
+    this.lastUserAction = apiRequest;
 
   	this.cryptocurrencyService.getCryptocurrencyDetails(apiRequest).subscribe(data => this.handleResponse(data));
   }
@@ -51,18 +51,22 @@ export class CryptocurrenciesComponent implements OnInit {
 
   handleResponse(data) {
 
+    this.loggerService.logUserAction(this.getUsername(), this.lastUserAction, JSON.stringify(data))
+        .subscribe(loggingResponse => this.handleLoggingingResponse(loggingResponse));
+
+
     this.valutesFrom = Object.keys(data);
+
     var index = 0;
+
     for(let i=0; i < this.valutesFrom.length; i++ ) {
-      let valueFrom = this.valutesFrom[i];
-      this.result[valueFrom] = Object.values(data[valueFrom]);
+      this.result[this.valutesFrom[i]] = Object.values(data[this.valutesFrom[i]]);
     }
 
     var firstValute = this.valutesFrom[0];
     this.valutesTo = Object.keys(data[firstValute]);
 
     this.hideData = false;
-
   }
 
   getApiConvertValutesRequest(from, to) {
@@ -71,6 +75,14 @@ export class CryptocurrenciesComponent implements OnInit {
   	let paramApiKey = "api_key=" + this.API_KEY;
 
   	return this.CONVERT_CRYPTOCURRENCIES_API + "?" + paramFromValutes + "&" + paramToValutes + "&" + paramApiKey;
+  }
+
+  handleLoggingingResponse(loggingResponse) {
+    console.log("User action logged: " + JSON.stringify(loggingResponse));
+  }
+
+  getUsername(){
+    return (localStorage.getItem("username") != null) ? localStorage.getItem("username") : "";
   }
 
 }

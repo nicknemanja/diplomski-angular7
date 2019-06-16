@@ -4,7 +4,7 @@ const path       = require('path');
 const bodyParser = require('body-parser');
 const cors       = require('cors');
 const mongoose   = require('mongoose');
-const config     = require('./config/database')
+const config     = require('./config/database');
 
 //Connection to MongoDB
 mongoose.connect(config.database);
