@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 import { AuthguardService } from './services/authguard.service';
+import { NavigationService } from './services/navigation.service';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,8 @@ import { AuthguardService } from './services/authguard.service';
 export class AppComponent {
   title = 'meanauthapp';
 
-  constructor(private authguard: AuthguardService) {
+  constructor(private authguard: AuthguardService,
+              private navigation: NavigationService) {
 
   }
 

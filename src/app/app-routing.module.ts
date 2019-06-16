@@ -5,12 +5,14 @@ import { RegistrationComponent } from './registration/registration.component';
 import { CryptocurrenciesComponent } from './cryptocurrencies/cryptocurrencies.component';
 
 import { AuthguardService } from './services/authguard.service';
+import { UserComponent } from './user/user.component';
 
 const routes: Routes = [
 	{path: '', component: LoginComponent},
 	{path: 'login', component: LoginComponent},
 	{path: 'registration', component: RegistrationComponent},
-	{path: 'cryptocurrencies', component: CryptocurrenciesComponent, canActivate: [AuthguardService] }
+	{path: 'cryptocurrencies', component: CryptocurrenciesComponent, canActivate: [AuthguardService] },
+	{path: 'user', component: UserComponent, canActivate: [AuthguardService]}
 ];
 
 @NgModule({

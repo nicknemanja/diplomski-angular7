@@ -16,13 +16,15 @@ import { RegistrationComponent } from './registration/registration.component';
 import { RegistrationService } from './services/registration.service';
 import { LoginService } from './services/login.service';
 import { CryptocurrenciesComponent } from './cryptocurrencies/cryptocurrencies.component';
+import { UserComponent } from './user/user.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegistrationComponent,
-    CryptocurrenciesComponent
+    CryptocurrenciesComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,

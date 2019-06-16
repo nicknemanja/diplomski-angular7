@@ -89,6 +89,17 @@ router.post("/log-user-action", (req, res, next) => {
 
 });
 
+router.get('/activity-tracking', (req, res, next) => {
+   UserAction.find({"username":"nemanja.savic"}, (err, data) => {
+    if(err) {
+      res.json({success: false, "msg": "Failed to get user activity tracking"});
+    } else {
+      console.log("Activity tracking: " + JSON.stringify(data));
+      res.json({success: true, "data": JSON.stringify(data)});
+    }
+  });
+});
+
 router.get('*', (req, res) => {
   res.redirect('/');
 });

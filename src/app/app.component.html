@@ -21,7 +21,8 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
         <li *ngIf="authguard.isLoggedIn()"> 
-        	<a (click)="authguard.logout()" class="link">Logout</a></li>
+          <a (click)="navigation.navigateTo('/user')" class="link">Profile</a>
+          <a (click)="authguard.logout()" class="link">Logout</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
