@@ -12,19 +12,21 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
+import { CryptocurrenciesComponent } from './cryptocurrencies/cryptocurrencies.component';
 
 import { RegistrationService } from './services/registration.service';
 import { LoginService } from './services/login.service';
-import { CryptocurrenciesComponent } from './cryptocurrencies/cryptocurrencies.component';
 import { UserComponent } from './user/user.component';
+import { BaseComponent } from './base/base.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegistrationComponent,
+    UserComponent,
     CryptocurrenciesComponent,
-    UserComponent
+    BaseComponent
   ],
   imports: [
     BrowserModule,

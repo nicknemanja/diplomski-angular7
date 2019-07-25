@@ -1,3 +1,22 @@
-<p>
-  user works!
-</p>
+<h2>
+  User Activity Tracking:
+</h2>
+
+<table id="table-user-action">
+  <thead>
+    <tr>
+      <th>Username</th>
+      <th>Action</th>
+      <th>Data</th>
+      <th>Date Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let action of useractivitytracking">
+      <td>{{action.username}}</td>
+      <td>{{action.action}}</td>
+      <td>{{action.data}}</td>
+      <td>{{action.time}}</td>
+    </tr>
+  </tbody>
+</table>

@@ -1,17 +1,22 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../user';
+import { LoggerService } from './logger.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService {
+export class LoginService extends LoggerService {
 
 	loginUrl = "http://localhost:3000/users/authenticate";
 
- 	constructor(private http : HttpClient) { }
+ 	constructor(public http : HttpClient, private loggerService : LoggerService) {
+		 super(http);
+	  }
 
  	loginUser(user: User) {
-  		return this.http.post<any>(this.loginUrl, user);
+  		return this.http.post<any>(this.loginUrl, user, { 
+			withCredentials: true 
+		  });
   	}
 }

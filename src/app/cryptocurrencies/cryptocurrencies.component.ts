@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CryptocurrencyService } from '../services/cryptocurrency.service';
 import { LoggerService } from '../services/logger.service';
+import { BaseComponent } from '../base/base.component';
 
 @Component({
   selector: 'app-cryptocurrencies',
   templateUrl: './cryptocurrencies.component.html',
   styleUrls: ['./cryptocurrencies.component.css']
 })
-export class CryptocurrenciesComponent implements OnInit {
+export class CryptocurrenciesComponent extends BaseComponent implements OnInit {
 
   CONVERT_CRYPTOCURRENCIES_API = "https://min-api.cryptocompare.com/data/pricemulti";
   API_KEY = "34d57fe96dc0d6ac74a21983e960ead7a35189dedc28c92abf33544d6f809169";
@@ -25,7 +26,9 @@ export class CryptocurrenciesComponent implements OnInit {
   userActionResponse = {};
 
   constructor(private cryptocurrencyService: CryptocurrencyService,
-              private loggerService: LoggerService) { }
+              loggerService: LoggerService) {
+                super(loggerService);
+             }
 
   ngOnInit() { }
 
@@ -51,14 +54,11 @@ export class CryptocurrenciesComponent implements OnInit {
 
   handleResponse(data) {
 
-    this.loggerService.logUserAction(this.getUsername(), this.lastUserAction, JSON.stringify(data))
-        .subscribe(loggingResponse => this.handleLoggingingResponse(loggingResponse));
-
+    this.logUserAction(this.getUsername(), this.lastUserAction, JSON.stringify(data));
 
     this.valutesFrom = Object.keys(data);
 
     var index = 0;
-
     for(let i=0; i < this.valutesFrom.length; i++ ) {
       this.result[this.valutesFrom[i]] = Object.values(data[this.valutesFrom[i]]);
     }

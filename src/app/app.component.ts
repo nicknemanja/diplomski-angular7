@@ -13,10 +13,8 @@ export class AppComponent {
   title = 'meanauthapp';
 
   constructor(private authguard: AuthguardService,
-              private navigation: NavigationService) {
-
+              private navigation: NavigationService) { 
+                //Nothing to do
   }
-
-  
 
 }
