@@ -7,7 +7,6 @@
           <option *ngFor="let criptocurrency of FROM_VALUTES">{{criptocurrency}}</option>
         </select>
       </div>
-
       <label for="exampleFormControlSelect2">To:</label>
       <div class="form-group">
         <select multiple class="form-control" id="selectBoxTo">
@@ -15,12 +14,8 @@
         </select>
       </div>
     </div>
-
     <button type="submit" class="btn btn-success">Convert</button>
-
   </form>
-
-
   <table [hidden]="hideData">
     <thead>
       <th>VALUTE</th>

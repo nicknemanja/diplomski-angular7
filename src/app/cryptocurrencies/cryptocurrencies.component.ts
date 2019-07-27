@@ -78,7 +78,7 @@ export class CryptocurrenciesComponent extends BaseComponent implements OnInit {
   }
 
   handleLoggingingResponse(loggingResponse) {
-    console.log("User action logged: " + JSON.stringify(loggingResponse));
+    // nothing to do
   }
 
   getUsername(){

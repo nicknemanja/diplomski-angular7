@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../user';
-import { LoginService } from '../services/login.service';
 
+import { LoginService } from '../services/login.service';
 import { LoggerService } from '../services/logger.service';
 
 import { BaseComponent } from '../base/base.component';
@@ -14,7 +14,6 @@ import { BaseComponent } from '../base/base.component';
 })
 
 export class LoginComponent extends BaseComponent implements OnInit {
-
   user = new User(0,"","","","","");
 
   constructor(private router: Router, 
@@ -24,24 +23,21 @@ export class LoginComponent extends BaseComponent implements OnInit {
                }
 
   ngOnInit() { 
-
+    //nothing to do
   }
 
   onSubmit(){
-
     if((<HTMLInputElement>document.getElementById("login-username")).value == "") {
       alert("Username and password must be filled");
       return;
     }
-
     if((<HTMLInputElement>document.getElementById("login-password")).value == "") {
       alert("Username and password must be filled");
       return;
     }
-
+    
     this.loginService.loginUser(this.user)
         .subscribe(userData => this.handleLoginData(userData));
-    
   }
 
   handleLoginData(userData) {
@@ -52,10 +48,8 @@ export class LoginComponent extends BaseComponent implements OnInit {
       sessionStorage.setItem("token", userData.token);
       this.router.navigate(['/cryptocurrencies']);
     } else {
-      alert(userData.msg);
-      return;
+        alert(userData.msg);
+        return;
     }
-
   }
-
 }

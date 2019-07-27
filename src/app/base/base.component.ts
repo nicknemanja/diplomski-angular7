@@ -30,7 +30,7 @@ export class BaseComponent implements OnInit {
   }
 
   handleLoggingResponse(data) {
-    console.log("User action logged: " + JSON.stringify(data));
+    //nothing to do
   }
 
   getUserActivityTracking(username: String) {

@@ -9,8 +9,10 @@ import { LoggerService } from './logger.service';
 export class LoginService extends LoggerService {
 
 	loginUrl = "http://localhost:3000/users/authenticate";
+	logoutUrl ="http://localhost:3000/users/logout";
 
- 	constructor(public http : HttpClient, private loggerService : LoggerService) {
+	 constructor(public http : HttpClient,
+					 private loggerService : LoggerService) {
 		 super(http);
 	  }
 
@@ -18,5 +20,9 @@ export class LoginService extends LoggerService {
   		return this.http.post<any>(this.loginUrl, user, { 
 			withCredentials: true 
 		  });
-  	}
+	  }
+	  
+	logoutUser() {
+		return this.http.post<any>(this.logoutUrl, {}, {withCredentials: true});
+	}
 }

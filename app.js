@@ -19,7 +19,7 @@ mongoose.connection.on('error', (err) => {
 });
 
 const sessionPaths = ["/users/register", "/users/authenticate", "/users/log-user-action",
-"/users/user-info"
+"/users/user-info", "/users/logout", "/users/activity-tracking"
 ];
 
 // Initializing Express
@@ -47,6 +47,7 @@ app.use(sessionPaths,cookieParser());
 const port = 3000;
 
  app.use(sessionPaths, session({
+  name: 'sessionId',
   cookieName: 'express-session',
   secret: 'ssshhhhh',
   // duration: 30 * 30 * 60 * 1000,
@@ -64,8 +65,6 @@ const users = require('./routes/users');
 app.use('/users', users);
 
 app.get('/', (req, res) => {
-  res.cookie("test", "test");
-  req.session.username = "Nemanja";
   res.send('Invalid Endpoint');
 });
 app.listen(port, () => {

@@ -18,6 +18,7 @@ import { RegistrationService } from './services/registration.service';
 import { LoginService } from './services/login.service';
 import { UserComponent } from './user/user.component';
 import { BaseComponent } from './base/base.component';
+import { MenuComponent } from './menu/menu.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { BaseComponent } from './base/base.component';
     RegistrationComponent,
     UserComponent,
     CryptocurrenciesComponent,
-    BaseComponent
+    BaseComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,

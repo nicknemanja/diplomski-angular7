@@ -4,38 +4,20 @@ const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 const User = require('../models/user');
 const UserAction = require('../models/useraction');
-
 const cors = require('cors');
-
 const session = require('express-session');
-
 var cookieParser = require('cookie-parser');
 
-const sessionPaths = ["register", "authenticate", "log-user-action",
-"user-info"
-];
-
-router.use(sessionPaths,cookieParser());
-
-router.use(sessionPaths, session({
+router.use(cookieParser());
+router.use(session({
   cookieName: 'express-session',
   secret: 'ssshhhhh',
-  // duration: 30 * 30 * 60 * 1000,
-  // activeDuration: 30 * 5 * 60 * 1000,
   saveUninitialized: true,
   resave: false,
-  // store: new FileStore,  
-  // cookie: { maxAge: 36000000,secure: false, httpOnly: false }
+  unset: 'destroy'
  }));
 
-// Register
 router.post('/register', cors(), (req, res) => {
-
-  let sess=req.session;
-  console.log("Session id: " + sess.id);
-
-  req.session.lastCheckingTime = "nemanja";
-  req.session.save();
 
   res.setHeader('Access-Control-Allow-Origin', "http://localhost:4200");
   res.header("Access-Control-Allow-Credentials", true);
@@ -58,20 +40,12 @@ router.post('/register', cors(), (req, res) => {
 
 });
 
-// Authenticate
 router.post('/authenticate', cors(), (req, res, next) => {
 
-  let sess=req.session;
-  console.log("Session id: " + sess.id);
-
-  req.session.lastCheckingTime = "nemanja";
-  req.session.save();
-  
   res.setHeader('Access-Control-Allow-Origin', "http://localhost:4200");
   res.setHeader('Access-Control-Allow-Credentials', true);
   
   const username = req.body.username;
-  res.cookie('cookieName', username);
   const password = req.body.password;
 
   User.getUserByUsername(username, (err, user) => {
@@ -88,42 +62,39 @@ router.post('/authenticate', cors(), (req, res, next) => {
       }
 
       if(isMatch) {
-
-        
-        req.session.lastCheckingTime = "nemanja";
-
         let session=req.session;
+        let userData = {
+          id: user._id,
+          firstname: user.firstname,
+          lastname: user.lastname,
+          username: user.username,
+          email: user.email
+        };
 
-        session.loggedInUser = "Nakon logina";
+        session.isLoggedIn = true;
+        session.user = userData;
+
         const token = jwt.sign(user.toJSON(), config.secret, {
-          expiresIn: 604800 //1 week
+          expiresIn: 604800
         });
 
         res.json({
           success:true,
           token: 'JWT ' + token,
-          user: {
-            id: user._id,
-            name: user.name,
-            username: user.username,
-            email: user.email
-          }
+          user: userData
         });
       } else{
           res.json({success:false, user: {username: username}, msg: "Wrong username and/or password!"});
       }
       return res;
     });
-
   });
-
 });
 
-
 router.post("/log-user-action", cors(), (req, res, next) => {
-
-  let sess=req.session;
-  console.log("Session id: " + sess.id);
+  
+  res.setHeader('Access-Control-Allow-Origin', "http://localhost:4200");
+  res.setHeader('Access-Control-Allow-Credentials', true);
 
   let userActionData = new UserAction({
     username: req.body.username,
@@ -140,23 +111,20 @@ router.post("/log-user-action", cors(), (req, res, next) => {
 });
 
 router.post('/user-info',  (req, res, next) => {
-
-  let sess=req.session;
-  console.log("Session id: " + sess.id);
-
-  req.session.lastCheckingTime = "nemanja";
-  req.session.save();
+  res.setHeader('Access-Control-Allow-Origin', "http://localhost:4200");
   res.setHeader('Access-Control-Allow-Credentials', true);
+
+  let session=req.session;
+  let userInfo = ( session.user != null ) ? session.user : {};
+  
+  res.json({userInfo : JSON.stringify(userInfo)});
 });
 
 router.post('/activity-tracking', (req, res, next) => {
 
-  let sess=req.session;
-  console.log("Session id: " + sess.id);
-
-  req.session.lastCheckingTime = "nemanja";
-  req.session.save();
+  res.setHeader('Access-Control-Allow-Origin', "http://localhost:4200");
   res.setHeader('Access-Control-Allow-Credentials', true);
+  
   let query = {username: req.body.username};
    UserAction.find(query, (err, data) => {
     if(err) {
@@ -167,17 +135,16 @@ router.post('/activity-tracking', (req, res, next) => {
   });
 });
 
-router.get("/testsesije", (req, res) => {
-  let sess=req.session;
-  console.log("Session id: " + sess.id);
-  
+router.post("/logout", cors(), (req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', "http://localhost:4200");
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.clearCookie("sessionId");
+  res.json({success: true});
 });
 
 router.get('*', (req, res) => {
-  req.session.lastCheckingTime = "nemanja";
-  req.session.save();
+  res.setHeader('Access-Control-Allow-Origin', "http://localhost:4200");
   res.setHeader('Access-Control-Allow-Credentials', true);
-  res.redirect('/');
 });
 
 module.exports = router;

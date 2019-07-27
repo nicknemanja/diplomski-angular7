@@ -8,6 +8,7 @@ import { HttpClient } from '@angular/common/http';
 export class UseractionService {
 
   userActivityTrackingInfo = "http://localhost:3000/users/activity-tracking";
+  userDataInfo = "http://localhost:3000/users/user-info";
 
   constructor(protected http : HttpClient) { }
 
@@ -16,6 +17,15 @@ export class UseractionService {
   		username: username
   	};
     return this.http.post(this.userActivityTrackingInfo, actionData, { 
+      withCredentials: true 
+      });
+  }
+
+  getUserInfo(username: String) {
+    let userInfo = {
+      username: username
+    };
+    return this.http.post(this.userDataInfo, userInfo, { 
       withCredentials: true 
       });
   }

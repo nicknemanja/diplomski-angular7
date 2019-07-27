@@ -10,7 +10,8 @@ import { BaseComponent } from '../base/base.component';
 })
 export class UserComponent extends BaseComponent implements OnInit {
 
-  useractivitytracking;
+  useractivitytracking: Object;
+  userInfo: Object;
 
   constructor(loggerService: LoggerService, private useractionService: UseractionService) {
     super(loggerService);
@@ -22,18 +23,23 @@ export class UserComponent extends BaseComponent implements OnInit {
   }
 
   loadUserData() {
-    console.log("calling loadUserData() - ispraviti sesiju pa uraditi...");
+    let username = this.getUsername();
+    this.useractionService.getUserInfo(username).subscribe(result =>  this.handleUserInfo(result));
   }
 
   loadUserActivityTracking() {
     let username = this.getUsername();
-    console.log("Getting activity-tracking for user: " + username);
     //TODO Uzeti username na serverskoj strani iz sesije kad se napravi...
-    this.useractionService.getUserActivityTracking(username).subscribe(result =>  this.handleData(result));
+    this.useractionService.getUserActivityTracking(username).subscribe(result =>  this.handleUserActivityTracking(result));
   }
 
-  handleData(result) {
-    this.useractivitytracking = (JSON.parse(result.data));
+  handleUserActivityTracking(result) {
+    this.useractivitytracking = JSON.parse(result.data);
+  }
+
+  handleUserInfo(result: any) {
+    console.log(result.userInfo.username);
+    this.userInfo = result.userInfo;
   }
 
 }

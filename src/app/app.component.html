@@ -20,7 +20,7 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
-        <li *ngIf="authguard.isLoggedIn()"> 
+        <li *ngIf="authguard.isLoggedIn()">
           <a (click)="navigation.navigateTo('/user')" class="link">Profile</a>
           <a (click)="authguard.logout()" class="link">Logout</a></li>
       </ul>

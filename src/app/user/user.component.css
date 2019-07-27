@@ -1,19 +1,21 @@
-#table-user-action {
+#table-user-action, #table-user-info {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     width: 100%;
   }
   
-  #table-user-action td, #table-user-action th {
+  #table-user-action td, #table-user-action th, #table-user-info td, #table-user-info th {
     border: 1px solid #ddd;
     padding: 8px;
   }
   
   #table-user-action tr:nth-child(even){background-color: #f2f2f2;}
+
+  #table-user-info tr:nth-child(even){background-color: #f2f2f2;}
   
   #customtable-user-actioners tr:hover {background-color: #ddd;}
   
-  #table-user-action th {
+  #table-user-action th, #table-user-info th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
