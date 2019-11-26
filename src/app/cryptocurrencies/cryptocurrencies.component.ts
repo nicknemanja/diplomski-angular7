@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CryptocurrencyService } from '../services/cryptocurrency.service';
 import { LoggerService } from '../services/logger.service';
 import { BaseComponent } from '../base/base.component';
-import { JSDocTagName } from '@angular/compiler/src/output/output_ast';
 
 import { ConnectionService } from 'ng-connection-service';
 
@@ -28,21 +27,36 @@ export class CryptocurrenciesComponent extends BaseComponent implements OnInit {
   lastUserAction;
   userActionResponse = {};
 
-  constructor(private cryptocurrencyService: CryptocurrencyService,
-              loggerService: LoggerService,
-              private connectionService:ConnectionService) {
-                super(loggerService);
-                console.log("Crypto constructor...");
-                this.connectionService.monitor().subscribe(isConnected => {
-                  console.log("Is connected: " + isConnected);
-                });
-             }
+  errorMessage: string = "";
+
+  status = 'DEFAULT';
+  isConnected = true;
+
+  constructor(
+    private cryptocurrencyService: CryptocurrencyService,
+    loggerService: LoggerService,
+    private connectionService: ConnectionService) 
+  {
+    super(loggerService);
+    this.connectionService.monitor().subscribe(isConnected => {
+      console.log("Online status:" + isConnected);
+    });
+  
+  }
 
   ngOnInit() { }
 
   convertCriptocurrencies() {
   	let from = this.getSelectedOptions("selectBoxFrom");
-  	let to = this.getSelectedOptions("selectBoxTo");
+    let to = this.getSelectedOptions("selectBoxTo");
+    
+    if(from.toString().trim().length == 0 || to.toString().trim().length == 0) {
+      this.setErrorMessage("Both values must be selected.");
+      return;
+    }
+
+    this.clearErrorMessage();
+    
     let apiRequest = this.getApiConvertValutesRequest(from, to);
     
     //for logging
@@ -89,8 +103,16 @@ export class CryptocurrenciesComponent extends BaseComponent implements OnInit {
     // nothing to do
   }
 
-  getUsername(){
+  getUsername() {
     return (localStorage.getItem("username") != null) ? localStorage.getItem("username") : "";
+  }
+
+  setErrorMessage(message: string) : void {
+    this.errorMessage = message;
+  }
+
+  clearErrorMessage() : void {
+    this.errorMessage = "";
   }
 
 }
