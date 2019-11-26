@@ -15,6 +15,7 @@ import { BaseComponent } from '../base/base.component';
 
 export class LoginComponent extends BaseComponent implements OnInit {
   user = new User(0,"","","","","");
+  errorMessage: String = "";
 
   constructor(private router: Router, 
               private loginService: LoginService,
@@ -27,11 +28,11 @@ export class LoginComponent extends BaseComponent implements OnInit {
   }
 
   onSubmit(){
-    if((<HTMLInputElement>document.getElementById("login-username")).value == "") {
+    if(this.user.username == "") {
       alert("Username and password must be filled");
       return;
     }
-    if((<HTMLInputElement>document.getElementById("login-password")).value == "") {
+    if(this.user.password == "") {
       alert("Username and password must be filled");
       return;
     }
@@ -42,13 +43,12 @@ export class LoginComponent extends BaseComponent implements OnInit {
 
   handleLoginData(userData) {
     this.logUserAction(userData.user.username, "Login", JSON.stringify(userData.success));
-
     if(userData.success) {
       localStorage.setItem("username", userData.user.username);
       sessionStorage.setItem("token", userData.token);
       this.router.navigate(['/cryptocurrencies']);
     } else {
-        alert(userData.msg);
+        this.errorMessage = "Invalid username or password.";
         return;
     }
   }

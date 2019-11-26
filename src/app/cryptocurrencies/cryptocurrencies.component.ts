@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CryptocurrencyService } from '../services/cryptocurrency.service';
 import { LoggerService } from '../services/logger.service';
 import { BaseComponent } from '../base/base.component';
+import { JSDocTagName } from '@angular/compiler/src/output/output_ast';
+
+import { ConnectionService } from 'ng-connection-service';
 
 @Component({
   selector: 'app-cryptocurrencies',
@@ -26,8 +29,13 @@ export class CryptocurrenciesComponent extends BaseComponent implements OnInit {
   userActionResponse = {};
 
   constructor(private cryptocurrencyService: CryptocurrencyService,
-              loggerService: LoggerService) {
+              loggerService: LoggerService,
+              private connectionService:ConnectionService) {
                 super(loggerService);
+                console.log("Crypto constructor...");
+                this.connectionService.monitor().subscribe(isConnected => {
+                  console.log("Is connected: " + isConnected);
+                });
              }
 
   ngOnInit() { }

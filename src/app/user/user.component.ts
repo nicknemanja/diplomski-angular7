@@ -10,8 +10,8 @@ import { BaseComponent } from '../base/base.component';
 })
 export class UserComponent extends BaseComponent implements OnInit {
 
-  useractivitytracking: Object;
-  userInfo: Object;
+  useractivitytracking: Array<Object> = [];
+  userInfo: Object = {};
 
   constructor(loggerService: LoggerService, private useractionService: UseractionService) {
     super(loggerService);
@@ -38,8 +38,7 @@ export class UserComponent extends BaseComponent implements OnInit {
   }
 
   handleUserInfo(result: any) {
-    console.log(result.userInfo.username);
-    this.userInfo = result.userInfo;
+    this.userInfo =  JSON.parse(result);
   }
 
 }

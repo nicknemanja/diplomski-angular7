@@ -7,12 +7,15 @@ import { LoggerService } from './logger.service';
 })
 export class CryptocurrencyService extends LoggerService {
 
+  title = 'connectionDetector';
+  status = 'ONLINE'; //initializing as online by default
+  isConnected = true;
+
   constructor(http : HttpClient) {
       super(http);
    }
 
-  getCryptocurrencyDetails(requestUrl) {
-  	return this.http.get<any>(requestUrl);
+  getCryptocurrencyDetails(requestUrl: string) {
+    return this.http.get<any>(requestUrl);
   }
-
-}
+};

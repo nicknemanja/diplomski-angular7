@@ -117,7 +117,7 @@ router.post('/user-info',  (req, res, next) => {
   let session=req.session;
   let userInfo = ( session.user != null ) ? session.user : {};
   
-  res.json({userInfo : JSON.stringify(userInfo)});
+  res.json(JSON.stringify(userInfo));
 });
 
 router.post('/activity-tracking', (req, res, next) => {

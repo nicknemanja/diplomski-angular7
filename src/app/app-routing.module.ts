@@ -12,7 +12,8 @@ const routes: Routes = [
 	{path: 'login', component: LoginComponent},
 	{path: 'registration', component: RegistrationComponent},
 	{path: 'cryptocurrencies', component: CryptocurrenciesComponent, canActivate: [AuthguardService] },
-	{path: 'user', component: UserComponent, canActivate: [AuthguardService]}
+	{path: 'user', component: UserComponent, canActivate: [AuthguardService]},
+	// { path: '**', component: PageNotFoundComponent } TODO create PageNotFoundComponent
 ];
 
 @NgModule({
